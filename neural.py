@@ -4,9 +4,10 @@ from splatter import *
 import time
 import asyncio
 from datetime import datetime
+import constants
 
 # Discord API token
-TOKEN = "MTA5NjQ5OTQwNTY4NDc1MjQ0NA.Ga7ZlW.czDxWkocgGm8Qtw2bx5cz2kG16FxfVlrC3gOfQ"
+TOKEN = constants.DISCORD_API_KEY
 
 # new_msg bool 
 new_msg = False
