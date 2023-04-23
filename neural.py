@@ -12,6 +12,7 @@ TOKEN = constants.DISCORD_API_KEY
 # new_msg bool 
 new_msg = False
 lm = None
+ltm = "None"
 
 # INTENT
 intents = discord.Intents.default()
@@ -51,23 +52,26 @@ async def thought_tick():
     global lm
     global new_msg
     global messages
+    global ltm
     inactive_counter = inactive_counter + 1
     if new_msg:
         inactive_counter = 0
         print("Chat History: " + str(messages))
         async with lm.channel.typing():
             # Run read_chat in a separate thread using asyncio.to_thread
-            read_result = await asyncio.to_thread(read_chat, str(messages))
+            read_result = await asyncio.to_thread(read_chat, str(messages), ltm)
 
             # Check the result of read_chat and run generate_response if it returns True
             if read_result:
-                generate_result = await asyncio.to_thread(generate_response, str(messages))
+                generate_result = await asyncio.to_thread(generate_response, str(messages), ltm)
                 print("Attemping to send response: " + generate_result)
                 await lm.channel.send(generate_result)
                 lm = None
 
         new_msg = False
-    if inactive_counter > 50:
+    if inactive_counter > 90:
+        if messages != []:
+            ltm = await asyncio.to_thread(compress_to_ltm, str(messages), ltm)
         messages = []
 
     
