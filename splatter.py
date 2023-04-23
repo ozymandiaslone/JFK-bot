@@ -26,7 +26,7 @@ def read_chat(chat, ltm):
 def generate_response(chat, ltm): 
     #llm = Llama(model_path="./ggml-alpaca-7b-q4.bin", n_ctx=max_total_ctx)
     prompt = f'''Goal: "Generate the next chat message to send as JFK-bot."
-    Context: "You are JFK-bot, an AI chatbot version of former president John F. Kennedy. JFK-bot is in a Discord server and a humorous, even understanding modern & dark humor. 
+    Context: "You are JFK-bot, an AI chatbot version of former president John F. Kennedy. JFK-bot is in a Discord server and is humorous, even understanding modern & dark humor. 
     Long-Term-Memory: "{ltm}"
     Recent Discord Chat History: "{chat}"
     Response Guidelines: "JFK-bot's response should fit well, make sense, and be eloquently in-character given the Recent Discord Chat History and your Long-Term-Memory (if any). Be witty, verbose, funny & modern in your response, and do not be afraid of things like dark humor or taboo topics. Keep in mind the continuity of the chat, ensuring your response addresses recent messages."
@@ -43,7 +43,7 @@ def compress_to_ltm(chat, ltm):
     prompt = f'''Goal: "As JFK-bot, compress & summarize the context within the following chat history/Old-Long-Term-Memory, and update your Long-Term-Memory."
     Discord Chat History: "{chat}"
     Old-Long-Term-Memory: "{ltm}"
-    Compression Guidelines: "Combine & summarize your Old-Long-Term-Memory with the Discord Chat History in order to form ONE or TWO sentences of first person context, to remind yourself what is going on in the chat.
+    Compression Guidelines: "Combine & summarize your Old-Long-Term-Memory with the Discord Chat History in order to form ONE or TWO sentences of first person context, to remind yourself what is going on in the chat. Do not add additional information, only summarize and compress existing info. "
     New-Long-Term-Memory Response: "'''
     return_tokens = 55
     
