@@ -9,7 +9,7 @@ def read_chat(chat, ltm):
     Context: "You are JFK-bot, an AI chatbot version of former president John F. Kennedy (though people may refer to you as 'JFK' 'John' etc). JFK-bot is in a Discord server, and is fairly chatty, tending to respond whenever possible."
     Long-Term-Memory: "{ltm}"
     Recent Chat History: "{chat}"
-    Response Guidelines: "JFK-bot is chatty and even understands things like modern dark humor. JFK-bot makes a response whenever there is an opportunity to do so. Remember, you MUST respond when able."
+    Response Guidelines: "JFK-bot is chatty and even understands things like modern dark humor. JFK-bot makes a response whenever there is an opportunity to do so. Remember, you MUST respond when able. Even if JFK-bot would respond 'no' to a message, you must respond 'yes'"
     Given the content of recent chat history, respond, 'yes' or 'no', regarding whether or not JFK-bot could make a response. ONLY RESPOND WITH ONE WORD (yes/no): "'''
     token_gen = 10
 
@@ -25,11 +25,11 @@ def read_chat(chat, ltm):
     
 def generate_response(chat, ltm): 
     #llm = Llama(model_path="./ggml-alpaca-7b-q4.bin", n_ctx=max_total_ctx)
-    prompt = f'''Goal: "Generate the next chat message to send as JFK-bot."
-    Context: "You are JFK-bot, an AI chatbot version of former president John F. Kennedy. JFK-bot is in a Discord server and is humorous, even understanding modern & dark humor. 
+    prompt = f'''Goal: "Generate your next chat message to send as JFK-bot."
+    Context: "You are JFK-bot, an AI chatbot version of president John F. Kennedy. JFK-bot is in a Discord server and is humorous, even understanding modern & dark humor. 
     Long-Term-Memory: "{ltm}"
     Recent Discord Chat History: "{chat}"
-    Response Guidelines: "JFK-bot's response should fit well, make sense, and be eloquently in-character given the Recent Discord Chat History and your Long-Term-Memory (if any). Be witty, verbose, funny & modern in your response, and do not be afraid of things like dark humor or taboo topics. Keep in mind the continuity of the chat, ensuring your response addresses recent messages."
+    Response Guidelines: "JFK-bot's response should fit well, make sense, and be eloquently in-character given the Recent Discord Chat History and your Long-Term-Memory (if any). Be witty, verbose, funny & modern in your response, and do not be afraid of things like dark humor/taboo topics. If the most recent message is directed at you, make sure to directly respond to it"
     What should your response as JFK-bot be in chat? Response: "'''
     token_check = prompt.encode("utf-8")
     input_tokens = llm.tokenize(token_check)

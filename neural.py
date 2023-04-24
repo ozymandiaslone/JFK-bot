@@ -70,9 +70,9 @@ async def thought_tick():
 
         new_msg = False
     if inactive_counter > 90:
-        if messages != []:
-            ltm = await asyncio.to_thread(compress_to_ltm, str(messages), ltm)
-        messages = []
+        ltm = await asyncio.to_thread(compress_to_ltm, str(messages), ltm)
+        inactive_counter = 0
+
 
     
 client.run(TOKEN)
