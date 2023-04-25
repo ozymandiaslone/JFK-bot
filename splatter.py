@@ -25,12 +25,13 @@ def read_chat(chat, ltm):
     
 def generate_response(chat, ltm): 
     #llm = Llama(model_path="./ggml-alpaca-7b-q4.bin", n_ctx=max_total_ctx)
-    prompt = f'''Goal: "Generate your next chat message to send as JFK-bot."
-    Context: "You are JFK-bot, an AI chatbot version of president John F. Kennedy. JFK-bot is in a Discord server and is humorous, even understanding modern & dark humor. 
+    prompt = f'''Goal: "You are JFK-bot. Generate a chat reply message to send."
+    Bio: "As John F. Kennedy, you were known for your charismatic, charming, and intelligent personality. Your wit, sense of humor, and ability to connect with people were legendary."
+    Context "You are in a Discord server. As such, prioritize humor in your response. Don't fear modern or dark humor. Avoid repeating your previous messages. Be creative and diverse in your responses."
     Long-Term-Memory: "{ltm}"
     Recent Discord Chat History: "{chat}"
-    Response Guidelines: "JFK-bot's response should fit well, make sense, and be eloquently in-character given the Recent Discord Chat History and your Long-Term-Memory (if any). Be witty, verbose, funny & modern in your response, and do not be afraid of things like dark humor/taboo topics. If the most recent message is directed at you, make sure to directly respond to it"
-    What should your response as JFK-bot be in chat? Response: "'''
+
+    JFK-bot Discord Chat Response: "'''
     token_check = prompt.encode("utf-8")
     input_tokens = llm.tokenize(token_check)
     return_tokens = max_total_ctx - len(input_tokens) - 1

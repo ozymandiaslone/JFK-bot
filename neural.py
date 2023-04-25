@@ -13,6 +13,7 @@ TOKEN = constants.DISCORD_API_KEY
 new_msg = False
 lm = None
 ltm = "None"
+changes = False
 
 # INTENT
 intents = discord.Intents.default()
@@ -53,9 +54,11 @@ async def thought_tick():
     global new_msg
     global messages
     global ltm
+    global changes
     inactive_counter = inactive_counter + 1
     if new_msg:
         inactive_counter = 0
+        changes = True
         print("Chat History: " + str(messages))
         async with lm.channel.typing():
             # Run read_chat in a separate thread using asyncio.to_thread
@@ -70,8 +73,10 @@ async def thought_tick():
 
         new_msg = False
     if inactive_counter > 90:
-        ltm = await asyncio.to_thread(compress_to_ltm, str(messages), ltm)
-        inactive_counter = 0
+        if changes:
+            ltm = await asyncio.to_thread(compress_to_ltm, str(messages), ltm)
+            inactive_counter = 0
+            changes = False
 
 
     

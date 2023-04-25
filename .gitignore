@@ -1,3 +1,3 @@
 convgpt4all.bin
-ggml-alpaca-7b-q4.bin
+ggml-vicuna-7b-1.1-q4_0.bin
 constants.py
