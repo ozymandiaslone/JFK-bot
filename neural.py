@@ -35,6 +35,7 @@ async def on_ready():
 async def on_message(message):
     global new_msg
     global lm
+    global considering 
     msg = (message.author.name,message.content)
     messages.append(msg)
     
