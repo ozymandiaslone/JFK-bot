@@ -27,9 +27,13 @@ messages = []
 
 async def process_stream(result_stream, msg):
     data = ""
-    for chunk in result_stream:
-        data += chunk
-        await message.edit(content=data)
+    while True:
+        try:
+            result_chunk = next(result_stream)
+            data += result_chunk
+            await msg.edit(content=data)
+        except StopIteration:
+            break
          
 
 @client.event
