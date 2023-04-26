@@ -46,7 +46,9 @@ async def on_message(message):
         return
 
     new_msg = True
-    if not considering:
+    if considering:
+        return
+    else:
         lm = message 
     
 inactive_counter = 0
