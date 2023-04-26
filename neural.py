@@ -30,7 +30,7 @@ async def process_stream(result_stream, msg):
     while True:
         try:
             result_chunk = next(result_stream)
-            data += ''.joing(result_chunk)
+            data += ''.join(result_chunk)
             await msg.edit(content=data)
         except StopIteration:
             break
