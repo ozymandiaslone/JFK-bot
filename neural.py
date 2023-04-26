@@ -79,7 +79,7 @@ async def thought_tick():
             if read_result:
                 response_generated = await asyncio.to_thread(generate_response, memory_string, ltm)
                 print("Attemping to send response: " + response_generated)
-                
+                await lm.channel.send(response_generated)
                 lm = None
                 considering = False
 
