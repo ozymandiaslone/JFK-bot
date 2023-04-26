@@ -24,7 +24,13 @@ client = discord.Client(intents=intents)
 
 # Global variables for storing chat history
 messages = []
-memory_string = ""
+
+async def process_stream(result_stream, msg):
+    data = ""
+    async for chunk in result_stream:
+        data += chunk
+        await message.edit(content=data)
+         
 
 @client.event
 async def on_ready():
@@ -50,7 +56,6 @@ async def on_message(message):
 inactive_counter = 0
 @tasks.loop(seconds=10)
 async def thought_tick():
-    global memory_string
     global inactive_counter
     global lm
     global new_msg
@@ -59,12 +64,11 @@ async def thought_tick():
     global changes
     inactive_counter = inactive_counter + 1
     if new_msg:
+        memory_string = ''
         inactive_counter = 0
         changes = True
         for msg in messages:
             memory_string = memory_string + "'" + msg[0] + "': " + msg[1] + "\n" 
-            idx = messages.index(msg)
-            messages.pop(idx)
         print("Chat History: " + memory_string)
         async with lm.channel.typing():
             # Run read_chat in a separate thread using asyncio.to_thread
@@ -72,7 +76,8 @@ async def thought_tick():
 
             # Check the result of read_chat and run generate_response if it returns True
             if read_result:
-                generate_result = await asyncio.to_thread(generate_response, memory_string, ltm)
+                msg = await lm.channel.send("Uhh...")
+                process_stream( await asyncio.to_thread(generate_response, memory_string, ltm), msg )
                 print("Attemping to send response: " + generate_result)
                 await lm.channel.send(generate_result)
                 lm = None
