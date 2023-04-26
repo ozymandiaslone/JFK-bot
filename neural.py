@@ -5,6 +5,7 @@ import time
 import asyncio
 from datetime import datetime
 import constants
+from async_generator import aclosing
 
 # Discord API token
 TOKEN = constants.DISCORD_API_KEY
@@ -27,7 +28,7 @@ messages = []
 
 async def process_stream(result_stream, msg):
     data = ""
-    async for chunk in async_generator.aclosing(result_stream):
+    async for chunk in aclosing(result_stream):
         data += chunk
         await message.edit(content=data)
          
