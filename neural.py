@@ -22,8 +22,9 @@ intents.message_content = True
 # Initialize the Discord client
 client = discord.Client(intents=intents)
 
-# Global variables for storing chat history and the last message received
+# Global variables for storing chat history
 messages = []
+memory_string = ""
 
 @client.event
 async def on_ready():
@@ -34,10 +35,10 @@ async def on_ready():
 async def on_message(message):
     global new_msg
     global lm
-    msg = {message.author.name:message.content}
+    msg = (message.author.name,message.content)
     messages.append(msg)
     
-    while len(str(messages)) > 4000:
+    while len(str(messages)) > 3000:
         messages.pop(0)
 
     if message.author == client.user:
@@ -49,6 +50,7 @@ async def on_message(message):
 inactive_counter = 0
 @tasks.loop(seconds=10)
 async def thought_tick():
+    global memory_string
     global inactive_counter
     global lm
     global new_msg
@@ -59,14 +61,18 @@ async def thought_tick():
     if new_msg:
         inactive_counter = 0
         changes = True
-        print("Chat History: " + str(messages))
+        for msg in messages:
+            memory_string = memory_string + "'" + msg[0] + "': " + msg[1] + "\n" 
+            idx = messages.index(msg)
+            messages.pop(idx)
+        print("Chat History: " + memory_string)
         async with lm.channel.typing():
             # Run read_chat in a separate thread using asyncio.to_thread
-            read_result = await asyncio.to_thread(read_chat, str(messages), ltm)
+            read_result = await asyncio.to_thread(read_chat, memory_string, ltm)
 
             # Check the result of read_chat and run generate_response if it returns True
             if read_result:
-                generate_result = await asyncio.to_thread(generate_response, str(messages), ltm)
+                generate_result = await asyncio.to_thread(generate_response, memory_string, ltm)
                 print("Attemping to send response: " + generate_result)
                 await lm.channel.send(generate_result)
                 lm = None

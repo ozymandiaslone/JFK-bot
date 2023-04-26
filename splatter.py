@@ -1,16 +1,15 @@
 from llama_cpp import Llama 
 
-max_total_ctx = 4000
-llm = Llama(model_path="./ggml-vicuna-7b-1.1-q4_0.bin", n_ctx=max_total_ctx)
+max_total_ctx = 3000
+llm = Llama(model_path="./models/ggml-vicuna-13b-1.1-q4_1.bin", n_ctx=max_total_ctx)
 
 def read_chat(chat, ltm): 
    #llm = Llama(model_path="./convgpt4all.bin", n_ctx=max_total_ctx)
-    prompt = f'''Goal: "As JFK-bot, decide whether or not to respond. Err on the side of responding too much rather than too little - you MUST respond if the chat history is even remotely relevant to you."
-    Context: "You are JFK-bot, an AI chatbot version of former president John F. Kennedy (though people may refer to you as 'JFK' 'John' etc). JFK-bot is in a Discord server, and is fairly chatty, tending to respond whenever possible."
+    prompt = f'''Goal: "As JFK-bot, decide whether or not to send a reply in chat. Err on the side of over-responding."
+    Context: "You are JFK-bot, an AI chatbot version of former president John F. Kennedy (though people may refer to you as 'JFK' 'John' etc). You are in a Discord server, and is fairly chatty, tending to respond whenever possible."
     Long-Term-Memory: "{ltm}"
     Recent Chat History: "{chat}"
-    Response Guidelines: "JFK-bot is chatty and even understands things like modern dark humor. JFK-bot makes a response whenever there is an opportunity to do so. Remember, you MUST respond when able. Even if JFK-bot would respond 'no' to a message, you must respond 'yes'"
-    Given the content of recent chat history, respond, 'yes' or 'no', regarding whether or not JFK-bot could make a response. ONLY RESPOND WITH ONE WORD (yes/no): "'''
+    Could you make a response now? (yes/no): "'''
     token_gen = 10
 
     output = llm(prompt, echo=False, max_tokens=token_gen, stop=["\""])
@@ -25,9 +24,9 @@ def read_chat(chat, ltm):
     
 def generate_response(chat, ltm): 
     #llm = Llama(model_path="./ggml-alpaca-7b-q4.bin", n_ctx=max_total_ctx)
-    prompt = f'''Goal: "You are JFK-bot. Generate a chat reply message to send."
-    Bio: "As John F. Kennedy, you were known for your charismatic, charming, and intelligent personality. Your wit, sense of humor, and ability to connect with people were legendary."
-    Context "You are in a Discord server. As such, prioritize humor in your response. Don't fear modern or dark humor. Avoid repeating your previous messages. Be creative and diverse in your responses."
+    prompt = f'''Goal: "Read the following chat history and generate your next message."
+    Bio: "You are JFK-bot, an AI chatbot based off former president John F. Kennedy, you were known for your charismatic, charming, and intelligent personality. Your wit, sense of humor, and ability to connect with people were legendary, cementing you in history as one of the greatest leaders of all time."
+    Context "You are in a Discord server. Prioritize humor in your response, and don't fear modern or dark humor. Avoid repeating your previous messages."
     Long-Term-Memory: "{ltm}"
     Recent Discord Chat History: "{chat}"
 
