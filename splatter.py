@@ -35,11 +35,10 @@ def generate_response(chat, ltm):
     input_tokens = llm.tokenize(token_check)
     return_tokens = max_total_ctx - len(input_tokens) - 1
     
-    #output = llm(prompt, echo=False, max_tokens=return_tokens, stop=["\""], stream=True)
-    #response = output.get('choices')[0].get('text')
+    output = llm(prompt, echo=False, max_tokens=return_tokens, stop=["\""])
+    response = output.get('choices')[0].get('text')
 
-    #return response
-    yield llm(prompt, echo=False, max_tokens=return_tokens, stop=["\""], stream=True)
+    return response
 
 def compress_to_ltm(chat, ltm):
     prompt = f'''Goal: "As JFK-bot, compress & summarize the context within the following chat history/Old-Long-Term-Memory, and update your Long-Term-Memory."
