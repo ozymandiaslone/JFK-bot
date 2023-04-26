@@ -27,7 +27,7 @@ messages = []
 
 async def process_stream(result_stream, msg):
     data = ""
-    async for chunk in result_stream:
+    async for chunk in async_generator.aclosing(result_stream):
         data += chunk
         await message.edit(content=data)
          
