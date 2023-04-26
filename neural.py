@@ -5,7 +5,6 @@ import time
 import asyncio
 from datetime import datetime
 import constants
-from async_generator import aclosing
 
 # Discord API token
 TOKEN = constants.DISCORD_API_KEY
@@ -26,9 +25,9 @@ client = discord.Client(intents=intents)
 # Global variables for storing chat history
 messages = []
 
-async def process_stream(result_stream, msg):
+def process_stream(result_stream, msg):
     data = ""
-    async for chunk in aclosing(result_stream):
+    for chunk in result_stream:
         data += chunk
         await message.edit(content=data)
          
@@ -78,7 +77,7 @@ async def thought_tick():
             # Check the result of read_chat and run generate_response if it returns True
             if read_result:
                 msg = await lm.channel.send("Uhh...")
-                await process_stream( await asyncio.to_thread(generate_response, memory_string, ltm), msg )
+                process_stream( await asyncio.to_thread(generate_response, memory_string, ltm), msg )
                 print("Attemping to send response")
                 lm = None
 
