@@ -14,6 +14,7 @@ new_msg = False
 lm = None
 ltm = "None"
 changes = False
+considering = False
 
 # INTENT
 intents = discord.Intents.default()
@@ -60,6 +61,7 @@ async def thought_tick():
     global messages
     global ltm
     global changes
+    global considering
     inactive_counter = inactive_counter + 1
     if new_msg:
         considering = True
