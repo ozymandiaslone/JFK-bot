@@ -40,7 +40,7 @@ async def on_message(message):
     msg = (message.author.name,message.content)
     messages.append(msg)
     
-    while len(str(messages)) > 3000:
+    while len(str(messages)) > 2000:
         messages.pop(0)
 
     if message.author == client.user:
@@ -86,6 +86,7 @@ async def thought_tick():
         new_msg = False
     if inactive_counter > 90:
         if changes:
+            messages = []
             ltm = await asyncio.to_thread(compress_to_ltm, str(messages), ltm)
             inactive_counter = 0
             changes = False

@@ -1,6 +1,6 @@
 from llama_cpp import Llama 
 
-max_total_ctx = 3000
+max_total_ctx = 2000
 llm = Llama(model_path="./models/ggml-vicuna-13b-1.1-q4_2.bin", n_ctx=max_total_ctx)
 
 def read_chat(chat, ltm): 
