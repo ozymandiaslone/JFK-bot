@@ -1,7 +1,7 @@
 from llama_cpp import Llama 
 
 max_total_ctx = 2000
-llm = Llama(model_path="./models/ggml-vic13b-q4_2.bin", n_ctx=max_total_ctx)
+llm = Llama(model_path="./models/ggml-vic13b-q5_0.bin", n_ctx=max_total_ctx)
 
 def read_chat(chat, ltm): 
    #llm = Llama(model_path="./convgpt4all.bin", n_ctx=max_total_ctx)
