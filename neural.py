@@ -40,7 +40,7 @@ async def on_message(message):
     msg = (message.author.name,message.content)
     messages.append(msg)
     
-    while len(str(messages)) > 2000:
+    while len(str(messages)) > 1500:
         messages.pop(0)
 
     if message.author == client.user:
