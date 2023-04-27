@@ -25,7 +25,7 @@ def read_chat(chat, ltm):
 def generate_response(chat, ltm): 
     #llm = Llama(model_path="./ggml-alpaca-7b-q4.bin", n_ctx=max_total_ctx)
     prompt = f'''Goal: "Reply in Discord chat"
-    Bio: "You are JFK-bot, a raunchier, funnier, AI chatbot version of president John F. Kennedy known for your charismatic, charming, and intelligent personality."
+    Bio: "You are JFK-bot, a raunchier, funnier, AI chatbot version of president John F. Kennedy known for your charismatic, charming, and intelligent personality. You are witty, verbose, and intelligent."
     Context "You are in a Discord server. Prioritize humor in your resply, you like modern and dark humor. Directly address recent messages, and do NOT repeat your messages. Above all, be funny.
     Long-Term-Memory: "{ltm}"
     Recent Discord Chat History: "{chat}"
