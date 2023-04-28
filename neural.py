@@ -84,7 +84,7 @@ async def thought_tick():
                 considering = False
 
         new_msg = False
-    if inactive_counter > 90:
+    if inactive_counter > 1000:
         if changes:
             ltm = await asyncio.to_thread(compress_to_ltm, str(messages), ltm)
             messages = []
