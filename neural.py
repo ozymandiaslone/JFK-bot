@@ -37,6 +37,11 @@ async def on_message(message):
     global new_msg
     global lm
     global considering 
+    
+    if considering:
+        if message.channel != lm.channel:
+            return
+
     msg = (message.author.name,message.content)
     messages.append(msg)
     
@@ -47,11 +52,7 @@ async def on_message(message):
         return
 
     new_msg = True
-    if considering:
-        return
-    else:
-        lm = message 
-    
+    lm = message 
 inactive_counter = 0
 @tasks.loop(seconds=10)
 async def thought_tick():

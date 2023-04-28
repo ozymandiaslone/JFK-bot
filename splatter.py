@@ -1,6 +1,6 @@
 from llama_cpp import Llama 
 
-max_total_ctx = 1900
+max_total_ctx = 2000
 llm = Llama(model_path="./models/ggml-vic13b-q4_2.bin", n_ctx=max_total_ctx)
 
 def read_chat(chat, ltm): 
@@ -12,7 +12,7 @@ def read_chat(chat, ltm):
     Could you make a response? (yes/no): "'''
     token_gen = 6
 
-    output = llm(prompt, echo=False, max_tokens=token_gen, stop=["\""], temperature=0.7)
+    output = llm(prompt, echo=False, max_tokens=token_gen, stop=["\""], temperature=0.66)
     response = output.get('choices')[0].get('text')
     print("Decision response: " + response)
     if 'yes' in response.lower():
@@ -26,7 +26,7 @@ def generate_response(chat, ltm):
     #llm = Llama(model_path="./ggml-alpaca-7b-q4.bin", n_ctx=max_total_ctx)
     prompt = f'''Goal: "Generate a unique Discord chat reply."
     Bio: "You are JFK-bot, a funnier, darker, AI chatbot version of president John F. Kennedy. You are witty, verbose, and intelligent, though as a chatbot, you prioritize modern edgy humor."
-    Context "You are in a Discord server. Directly address recent messages, and do NOT repeat any message content. Your response should be informal, conversational, and not too long. Do NOT repeat content from your previous messages. Respond to any and all messages aimed at you, which you haven't yet addressed."
+    Context "You are in a Discord server. Directly address recent messages, and do NOT repeat any message content. Don't address a message if you have previously addressed it. Your response should be informal, conversational, and not too long. Do NOT repeat content from your previous messages. Respond to any and all messages aimed at you, which you haven't yet addressed."
     Long-Term-Memory: "{ltm}"
     Recent Discord Chat History: "{chat}"
 
