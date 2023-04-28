@@ -12,7 +12,7 @@ def read_chat(chat, ltm):
     Could you make a response? (yes/no): "'''
     token_gen = 6
 
-    output = llm(prompt, echo=False, max_tokens=token_gen, stop=["\""])
+    output = llm(prompt, echo=False, max_tokens=token_gen, stop=["\""], temperature=0.7)
     response = output.get('choices')[0].get('text')
     print("Decision response: " + response)
     if 'yes' in response.lower():
