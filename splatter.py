@@ -5,8 +5,8 @@ llm = Llama(model_path="./models/stable-vicuna-13B.ggml.q4_2.bin", n_ctx=max_tot
 
 def read_chat(chat, ltm): 
    #llm = Llama(model_path="./convgpt4all.bin", n_ctx=max_total_ctx)
-    prompt = f'''Goal: "As JFK-bot, decide whether or not to send a reply in chat. Err on the side of over-responding."
-    Context: "You are an AI chatbot version of former president John F. Kennedy in a Discord server. You tend to respond whenever possible. Respond if you are part of the converstaion."
+    prompt = f'''Goal: "As JFK-bot, determine whether there are any unanswered messages in chat intended for you."
+    Context: "You are an AI chatbot version of former president John F. Kennedy in a Discord server. You respond whenever possible. Respond if you are part of the converstaion. If possible, you must respond."
     Long-Term-Memory: "{ltm}"
     Recent Chat History: "{chat}"
     Could you make a response? (yes/no): "'''
