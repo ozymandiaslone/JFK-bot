@@ -6,7 +6,7 @@ llm = Llama(model_path="./models/wizardLM-7B.ggml.q4_0.bin", n_ctx=max_total_ctx
 def read_chat(chat, ltm): 
    #llm = Llama(model_path="./convgpt4all.bin", n_ctx=max_total_ctx)
     prompt = f'''Goal: "Determine whether or not to send a message in chat."
-    Context: "You are an AI chatbot version of former president John F. Kennedy, in a Discord server. Read the following chat history and determine if you could make a reply."
+    Context: "You are an AI chatbot version of former president John F. Kennedy, in a Discord server. Read the following chat history to decide whether or not to send a message. You MUST do so if possible. Err on the side of over-replying."
     Recent Chat History: "{chat}"
     Could you make reply? Respond with one word, (yes/no): "'''
     token_gen = 6
